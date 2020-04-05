@@ -25,7 +25,10 @@ def predict_rub_salary_for_hh(vacancy):
     if vacancy_salary['currency'] != 'RUR':
         return None
 
-    expected_salary =  predict_salary(vacancy_salary['from'], vacancy_salary['to'])
+    expected_salary = predict_salary(
+        vacancy_salary['from'],
+        vacancy_salary['to']
+    )
 
     return expected_salary
 
@@ -34,7 +37,8 @@ def predict_rub_salary_for_sj(vacancy):
     if vacancy['currency'] != 'rub':
         return None
 
-    expected_salary = predict_salary(vacancy['payment_from'], vacancy['payment_to'])
+    expected_salary = predict_salary(vacancy['payment_from'],
+                                     vacancy['payment_to'])
 
     return expected_salary
 
@@ -87,7 +91,8 @@ def calculate_average_salary_by_programming_language_for_hh(programming_language
     return average_salary_by_programming_language
 
 
-def calculate_average_salary_by_programming_language_for_sj(programming_language, superjob_token):
+def calculate_average_salary_by_programming_language_for_sj(programming_language,
+                                                            superjob_token):
     average_salaries_by_pages = []
     vacancies_processed_by_pages = []
 
@@ -110,7 +115,6 @@ def calculate_average_salary_by_programming_language_for_sj(programming_language
 
         vacancies = page_response.json()
 
-
         if vacancies['total'] > 0:
             vacancies_found = vacancies['total']
         else:
@@ -132,7 +136,7 @@ def calculate_average_salary_by_programming_language_for_sj(programming_language
 
     average_salary = mean(average_salaries_by_pages)
     average_salary = int(average_salary)
-    
+
     vacancies_processed = sum(vacancies_processed_by_pages)
 
     average_salary_by_programming_language = {
@@ -144,8 +148,16 @@ def calculate_average_salary_by_programming_language_for_sj(programming_language
     return average_salary_by_programming_language
 
 
-def create_console_statistics_table(average_salary_by_programming_languages, title):
-    table_data = [['Языки программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата']]
+def create_console_statistics_table(average_salary_by_programming_languages,
+                                    title):
+    table_data = [
+        [
+            'Языки программирования',
+            'Вакансий найдено',
+            'Вакансий обработано',
+            'Средняя зарплата'
+        ]
+    ]
 
     for programming_language in average_salary_by_programming_languages:
         try:
@@ -172,7 +184,21 @@ def main():
     load_dotenv()
     superjob_token = os.getenv('SUPERJOB_TOKEN')
 
-    popular_programming_languages = ['JavaScript', 'Java', 'Python', 'Ruby', 'PHP', 'C++', 'C#', 'C', 'Go', 'Objective-C', 'Scala', 'Swift', 'TypeScript']
+    popular_programming_languages = [
+        'JavaScript',
+        'Java',
+        'Python',
+        'Ruby',
+        'PHP',
+        'C++',
+        'C#',
+        'C',
+        'Go',
+        'Objective-C',
+        'Scala',
+        'Swift',
+        'TypeScript'
+    ]
 
     average_salary_by_programming_languages_for_hh = {}
     average_salary_by_programming_languages_for_sj = {}
@@ -189,5 +215,5 @@ def main():
     print(console_statistics_table_sj)
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
