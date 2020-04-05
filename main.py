@@ -74,6 +74,8 @@ def calculate_average_salary_by_programming_language_for_hh(programming_language
         page += 1
 
     average_salary = mean(average_salaries_by_pages)
+    average_salary = int(average_salary)
+
     vacancies_processed = sum(vacancies_processed_by_pages)
 
     average_salary_by_programming_language = {
@@ -129,6 +131,8 @@ def calculate_average_salary_by_programming_language_for_sj(programming_language
         page += 1
 
     average_salary = mean(average_salaries_by_pages)
+    average_salary = int(average_salary)
+    
     vacancies_processed = sum(vacancies_processed_by_pages)
 
     average_salary_by_programming_language = {
